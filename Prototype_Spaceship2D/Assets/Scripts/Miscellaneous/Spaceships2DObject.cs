@@ -9,9 +9,13 @@ using System.Collections;
 
 public abstract class Spaceships2DObject : MonoBehaviour
 {
+	protected Spaceships2DObjectType type;
+
 	public GameController Controller { get; set; }
 
 	public abstract bool OutOfBounds();
+
+	public abstract void Collision();
 
 	public virtual void Instantiate(ObjectDirection objectDirection)
 	{

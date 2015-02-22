@@ -10,13 +10,14 @@ public class HealthPickup : Spaceships2DObject
 	void Start()
 	{
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
+		type = Spaceships2DObjectType.HealthPickup;
 	}
 
 	void Update()
 	{
 		if (OutOfBounds())
 		{
-			Destroy(gameObject);
+			Controller.RemoveSpaceship2DObject(gameObject, type);
 		}
 	}
 
@@ -25,5 +26,10 @@ public class HealthPickup : Spaceships2DObject
 		Vector2 position = mainCamera.WorldToViewportPoint(transform.position);
 		
 		return (position.x > 1f || position.x < 0f || position.y > 1f || position.y < 0f);
+	}
+
+	public override void Collision ()
+	{
+		Controller.RemoveSpaceship2DObject(gameObject, type);
 	}
 }

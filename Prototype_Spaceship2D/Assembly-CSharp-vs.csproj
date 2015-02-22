@@ -51,6 +51,8 @@
      <Compile Include="Assets\Scripts\Miscellaneous\Spaceships2DObject.cs" />
      <Compile Include="Assets\Scripts\Miscellaneous\UserInterface.cs" />
      <Compile Include="Assets\Scripts\Pickup Scripts\HealthPickup.cs" />
+     <Compile Include="Assets\Scripts\Pickup Scripts\MissilePickup.cs" />
+     <Compile Include="Assets\Scripts\Player Scripts\Missile.cs" />
      <Compile Include="Assets\Scripts\Player Scripts\PlayerController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>

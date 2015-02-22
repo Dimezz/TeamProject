@@ -12,17 +12,23 @@ public class Asteroid : Spaceships2DObject
 	private Camera mainCamera;
 	private int points;
 
+	public int Damage
+	{
+		get; set;
+	}
+
 	void Start()
 	{
 		points = 1;
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
+		type = Spaceships2DObjectType.Asteroid;
 	}
 
 	void Update()
 	{
 		if (OutOfBounds())
 		{
-			Controller.RemoveSpaceship2DObject(gameObject, points);
+			Controller.RemoveSpaceship2DObject(gameObject, type, points);
 		}
 	}
 
@@ -33,8 +39,13 @@ public class Asteroid : Spaceships2DObject
 		return (position.x > 1f || position.x < 0f || position.y > 1f || position.y < 0f);
 	}
 
-	public void Collision()
+	public override void Collision()
 	{
-		Controller.RemoveSpaceship2DObject(gameObject, -points);
+		Controller.RemoveSpaceship2DObject(gameObject, type, -points);
 	}	
+
+	public void HitByWeapon()
+	{
+		Controller.RemoveSpaceship2DObject(gameObject, type, points * 10);
+	}
 }

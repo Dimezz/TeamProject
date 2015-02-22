@@ -14,6 +14,7 @@ public class UserInterface : MonoBehaviour
 	private GameObject scoreText;
 	private GameObject timeText;
 	private GameObject messageText;
+	private GameObject missilesText;
 
 	void Start()
 	{
@@ -21,6 +22,7 @@ public class UserInterface : MonoBehaviour
 		scoreText = GameObject.FindGameObjectWithTag("UIScore");
 		timeText = GameObject.FindGameObjectWithTag("UITime");
 		messageText = GameObject.FindGameObjectWithTag("UIMessage");
+		missilesText = GameObject.FindGameObjectWithTag("UIMissiles");
 	}
 
 	public void UpdateMessage(string message)
@@ -41,5 +43,10 @@ public class UserInterface : MonoBehaviour
 	public void UpdateTimer(float time)
 	{
 		timeText.GetComponent<Text>().text = string.Format("Time: {0}", (int)time);
+	}
+
+	public void UpdateMissileCount(int missiles)
+	{
+		missilesText.GetComponent<Text>().text = "Missiles: " + missiles;
 	}
 }

@@ -17,21 +17,22 @@ public struct ObjectDirection
 }
 
 public enum Direction { Up = 1, Down, Left, Right};
+public enum Spaceships2DObjectType { Asteroid = 1, HealthPickup, Missile, MissilePickup };
 
 public class GameController : MonoBehaviour
 {
-	public GameObject prefab;
+	public GameObject asteroidPrefab;
 	public GameObject healthPrefab;
+	public GameObject missilePickupPrefab;
 	public int maxEnemies = 1;
 
-	private GameObject currentHealthPickup;
 	private float spawnRateTimer;
 	private float minEnemySpeed;
 	private float maxEnemySpeed;
 	private int currentEnemies;
 	private PlayerController player;
 	private Camera mainCamera;
-	private List<GameObject> enemyList;
+	private List<GameObject> spaceships2DGameObjects;
 	private bool inCoroutine;
 	private int waveNumber;
 
@@ -43,14 +44,14 @@ public class GameController : MonoBehaviour
 
 	void Start()
 	{
-		enemyList = new List<GameObject>();
+		spaceships2DGameObjects = new List<GameObject>();
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		userInterface = GameObject.FindGameObjectWithTag("UI").GetComponent<UserInterface>();
 		inCoroutine = false;
 		currentEnemies = 0;
 		minEnemySpeed = 3f;
-		maxEnemySpeed = 5f;
+		maxEnemySpeed = 4f;
 		waveNumber = 1;
 
 		// Init user interface
@@ -61,10 +62,9 @@ public class GameController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		time += Time.deltaTime;
-
 		if (player.Health > 0)
 		{
+			time += Time.deltaTime;
 			ManageEnemies();
 		}
 		else
@@ -72,33 +72,47 @@ public class GameController : MonoBehaviour
 			GameOver();
 		}
 		UpdateUserInterface();
+
+		print ("Current enemies: " + currentEnemies.ToString() + " Total game objects: " + spaceships2DGameObjects.Count.ToString());
 	}
 
 	// Removing object from the game
-	public void RemoveSpaceship2DObject(GameObject shapeship2DObject, int points = 0)
+	public void RemoveSpaceship2DObject(GameObject shapeship2DObject, Spaceships2DObjectType type, int points = 0)
 	{
-		enemyList.Remove(shapeship2DObject);
+		if (type == Spaceships2DObjectType.Asteroid)
+		{
+			currentEnemies--;
+		}
+
+		spaceships2DGameObjects.Remove(shapeship2DObject);
 		Destroy(shapeship2DObject);
-		currentEnemies--;
 		score += points;
 	}
 
 	// Manage the number and speed of enemies
 	void ManageEnemies()
 	{
-		if (enemyList.Count == 0 && !inCoroutine)
+		if (currentEnemies == 0 && !inCoroutine)
 		{
-			StartCoroutine(SpawnWave());
+			StartCoroutine(SpawnStandardWave());
 		}
 	}
 
 	// Controls the instantiation of enemies and pickups
-	IEnumerator SpawnWave()
+	IEnumerator SpawnStandardWave()
 	{
 		inCoroutine = true;
-		bool pickupSpawned = false;
-		message = "Wave: " + waveNumber.ToString() + " Enemies: " + maxEnemies.ToString();
-		yield return new WaitForSeconds(1);
+
+		if (waveNumber % 5 == 0)
+		{
+			message = "Boss Wave: " + waveNumber.ToString() + " Enemies: " + maxEnemies.ToString();
+		}
+		else
+		{
+			message = "Wave: " + waveNumber.ToString() + " Enemies: " + maxEnemies.ToString();
+		}
+
+		yield return new WaitForSeconds(2);
 		int currentEnemiesAtStart = currentEnemies;
 
 		for (; currentEnemiesAtStart < maxEnemies; currentEnemiesAtStart++)
@@ -108,17 +122,23 @@ public class GameController : MonoBehaviour
 				break;
 			}
 
-			GameObject enemy = Instantiate(prefab) as GameObject;
-			
-			enemy.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
-			enemy.GetComponent<Spaceships2DObject>().Controller = this;
-			enemyList.Add(enemy);
-			currentEnemies++;
+			if (waveNumber % 5 == 0)
+			{
+				SpawnAsteroid(1.5f);
+			}
+			else
+			{
+				SpawnAsteroid();
+			}
 
-			if (Random.Range(0, 50) == 1 && !pickupSpawned)
+			if (Random.Range(0, 50) == 1)
 			{
 				SpawnHealth();
-				pickupSpawned = true;
+			}
+
+			if (Random.Range(0, 50) == 2)
+			{
+				SpawnMissile();
 			}
 
 			yield return new WaitForSeconds(0.1f);
@@ -131,7 +151,7 @@ public class GameController : MonoBehaviour
 		{
 			minEnemySpeed += 0.2f;
 		}
-		if (maxEnemySpeed < 7f)
+		if (maxEnemySpeed < 6f)
 		{
 			maxEnemySpeed += 0.2f;
 		}
@@ -140,9 +160,32 @@ public class GameController : MonoBehaviour
 
 	void SpawnHealth()
 	{
-		currentHealthPickup = Instantiate(healthPrefab) as GameObject;
+		GameObject healthPickup = Instantiate(healthPrefab) as GameObject;
 
-		currentHealthPickup.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
+		healthPickup.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
+		healthPickup.GetComponent<Spaceships2DObject>().Controller = this;
+		spaceships2DGameObjects.Add(healthPickup);
+	}
+
+	void SpawnAsteroid(float scale = 1)
+	{
+		GameObject enemy = Instantiate(asteroidPrefab) as GameObject;
+		
+		enemy.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
+		enemy.GetComponent<Spaceships2DObject>().Controller = this;
+		enemy.GetComponent<Asteroid>().Damage = (int)(10f * scale);
+		enemy.transform.localScale *= scale;
+		spaceships2DGameObjects.Add(enemy);
+		currentEnemies++;
+	}
+
+	void SpawnMissile()
+	{
+		GameObject missilePickup = Instantiate(missilePickupPrefab) as GameObject;
+		
+		missilePickup.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
+		missilePickup.GetComponent<Spaceships2DObject>().Controller = this;
+		spaceships2DGameObjects.Add(missilePickup);
 	}
 
 	// Update the user interface
@@ -152,16 +195,15 @@ public class GameController : MonoBehaviour
 		userInterface.UpdateScore(score);
 		userInterface.UpdateTimer(time);
 		userInterface.UpdateMessage(message);
+		userInterface.UpdateMissileCount(player.missileCount);
 	}
 
 	void GameOver()
 	{
-		for (int index = enemyList.Count - 1; index >= 0; index--)
+		for (int index = spaceships2DGameObjects.Count - 1; index >= 0; index--)
 		{
-			enemyList[index].GetComponent<Spaceships2DObject>().rigidbody2D.velocity = new Vector2(0, 0);
+			spaceships2DGameObjects[index].GetComponent<Spaceships2DObject>().rigidbody2D.velocity = new Vector2(0, 0);
 		}
-		currentHealthPickup.rigidbody2D.velocity = new Vector2(0, 0);
-
 		message = "Game Over! Press R to respawn.";
 	}
 
