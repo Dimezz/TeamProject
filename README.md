@@ -1,4 +1,4 @@
-# TeamProject
+# Team Project
 
 Our project is currently unnamed. The games focuses on the player who controls a spaceships and must avoid the randomly spawning asteroids. The player can currently shoot missiles and pickup health and ammo pickups that also spawn randomly.
 
