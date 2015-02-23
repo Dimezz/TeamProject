@@ -1,12 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Miscellaneous\GameController.cs">
     <Files>
-      <File FileName="Assets\Scripts\Miscellaneous\GameController.cs" Line="81" Column="3" />
-      <File FileName="Assets\Scripts\Pickup Scripts\MissilePickup.cs" Line="5" Column="4" />
-      <File FileName="Assets\Scripts\Player Scripts\PlayerController.cs" Line="87" Column="16" />
+      <File FileName="Assets\Scripts\Miscellaneous\UserInterface.cs" Line="30" Column="48" />
+      <File FileName="Assets\Scripts\Miscellaneous\GameController.cs" Line="80" Column="108" />
+      <File FileName="Assets\Scripts\Pickup Scripts\MissilePickup.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player Scripts\PlayerController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Pickup Scripts\HealthPickup.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enemy Scripts\Asteroid.cs" Line="22" Column="14" />
+      <File FileName="Assets\Scripts\Enemy Scripts\Asteroid.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

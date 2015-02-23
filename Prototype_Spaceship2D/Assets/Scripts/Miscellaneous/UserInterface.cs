@@ -27,7 +27,7 @@ public class UserInterface : MonoBehaviour
 
 	public void UpdateMessage(string message)
 	{
-		messageText.GetComponent<Text>().text = "Incomming Transmission: " + message;
+		messageText.GetComponent<Text>().text = "Incoming Transmission: " + message;
 	}
 	
 	public void UpdateLives(int lives)
