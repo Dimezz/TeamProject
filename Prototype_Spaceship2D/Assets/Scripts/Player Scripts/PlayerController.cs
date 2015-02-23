@@ -81,6 +81,11 @@ public class PlayerController : MonoBehaviour
 			GetComponent<AudioSource>().Play();
 
 			health -= collider.GetComponent<Asteroid>().Damage;
+
+			if (health < 0)
+			{
+				health = 0;
+			}
 		}
 		else if (collider.tag == "HealthPickup")
 		{

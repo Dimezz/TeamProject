@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * Jordan Rowe: 21/02/2015
+ * 
+ * The PlayerController class controls the player movement and actions
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class MissilePickup : Spaceships2DObject 
