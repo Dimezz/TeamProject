@@ -1,5 +1,5 @@
 ﻿/*
- * Jordan Rowe: 21/02/2015
+ * Jordan Rowe: 27/02/2015
  * 
  * The Missile class contains information about missile speed and direction.
  */
@@ -9,35 +9,36 @@ using System.Collections;
 
 public class Missile : Spaceships2DObject 
 {
-	private Camera mainCamera;
-	private GameObject player;
+	// The game object which shot this missile
+	private IShooter parent;
 
 	void Start()
 	{
 		mainCamera = GameObject.FindGameObjectWithTag ("MainCamera").camera;
 		type = Spaceships2DObjectType.Missile;
-		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
 	void Update()
 	{
 		if (OutOfBounds())
 		{
-			player.GetComponent<PlayerController>().RemoveMissile(gameObject);
+			parent.RemoveMissile(gameObject);
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (collider.tag == "Asteroid")
+		if (collider.tag == "Asteroid" || collider.tag == "BasicEnemy")
 		{
 			collider.GetComponent<Asteroid>().HitByWeapon();
-			player.GetComponent<PlayerController>().RemoveMissile(gameObject, true);
+			parent.RemoveMissile(gameObject, true);
 		}
 	}
 
-	public void Fire(Transform startLocation, Direction direction)
+	// Missile position based off player location
+	public void Fire(Transform startLocation, Direction direction, IShooter parentObject)
 	{
+		parent = parentObject;
 		transform.position = startLocation.position;
 
 		switch(direction)
@@ -59,13 +60,4 @@ public class Missile : Spaceships2DObject
 			break;
 		}
 	}
-
-	public override bool OutOfBounds()
-	{
-		Vector2 position = mainCamera.WorldToViewportPoint(transform.position);
-		
-		return (position.x > 1f || position.x < 0f || position.y > 1f || position.y < 0f);
-	}
-	
-	public override void Collision () {}
 }

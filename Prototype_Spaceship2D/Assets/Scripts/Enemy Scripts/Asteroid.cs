@@ -1,5 +1,5 @@
 /*
- * Jordan Rowe: 21/02/2015
+ * Jordan Rowe: 27/02/2015
  * 
  * The Enemy class contains information about enemies.
  */
@@ -9,8 +9,8 @@ using System.Collections;
 
 public class Asteroid : Spaceships2DObject
 {
-	private Camera mainCamera;
-	private int points;
+	private int pointsForAvoiding;
+	private int pointsForDestroying;
 
 	public int Damage
 	{
@@ -19,7 +19,10 @@ public class Asteroid : Spaceships2DObject
 
 	void Start()
 	{
-		points = 1;
+		pointsForAvoiding = 1;
+		pointsForDestroying = 10;
+		pointsForCollision = -1;
+
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
 		type = Spaceships2DObjectType.Asteroid;
 	}
@@ -28,24 +31,13 @@ public class Asteroid : Spaceships2DObject
 	{
 		if (OutOfBounds())
 		{
-			Controller.RemoveSpaceship2DObject(gameObject, type, points);
+			Controller.RemoveSpaceship2DObject(gameObject, type, pointsForAvoiding);
 		}
 	}
-
-	public override bool OutOfBounds()
-	{
-		Vector2 position = mainCamera.WorldToViewportPoint(transform.position);
-
-		return (position.x > 1f || position.x < 0f || position.y > 1f || position.y < 0f);
-	}
-
-	public override void Collision()
-	{
-		Controller.RemoveSpaceship2DObject(gameObject, type, -points);
-	}	
-
+	
+	// More points if hit by a players missile
 	public void HitByWeapon()
 	{
-		Controller.RemoveSpaceship2DObject(gameObject, type, points * 10);
+		Controller.RemoveSpaceship2DObject(gameObject, type, pointsForDestroying);
 	}
 }

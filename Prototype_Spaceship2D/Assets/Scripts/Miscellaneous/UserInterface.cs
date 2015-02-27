@@ -1,7 +1,7 @@
 ﻿/*
- * Jordan Rowe: 21/02/2015
+ * Jordan Rowe: 27/02/2015
  * 
- * The UserInterface class controls the players lives, score and timer.
+ * The UserInterface class controls the players lives, score, timer, messages and missile count.
  */
 
 using UnityEngine;
@@ -18,6 +18,7 @@ public class UserInterface : MonoBehaviour
 
 	void Start()
 	{
+		// Find UI game objects
 		healthText = GameObject.FindGameObjectWithTag("UIHealth");
 		scoreText = GameObject.FindGameObjectWithTag("UIScore");
 		timeText = GameObject.FindGameObjectWithTag("UITime");

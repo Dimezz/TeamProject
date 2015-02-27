@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Enemy Scripts\Asteroid.cs" />
+     <Compile Include="Assets\Scripts\Enemy Scripts\BasicEnemyController.cs" />
      <Compile Include="Assets\Scripts\Miscellaneous\GameController.cs" />
+     <Compile Include="Assets\Scripts\Miscellaneous\Interfaces.cs" />
      <Compile Include="Assets\Scripts\Miscellaneous\Spaceships2DObject.cs" />
      <Compile Include="Assets\Scripts\Miscellaneous\UserInterface.cs" />
      <Compile Include="Assets\Scripts\Pickup Scripts\HealthPickup.cs" />

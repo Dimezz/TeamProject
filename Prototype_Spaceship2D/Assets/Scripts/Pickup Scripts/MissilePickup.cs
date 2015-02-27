@@ -1,7 +1,7 @@
 ﻿/*
- * Jordan Rowe: 21/02/2015
+ * Jordan Rowe: 27/02/2015
  * 
- * The PlayerController class controls the player movement and actions
+ * The MissilePickup class controls the missile pickups and their missile counts
  */
 
 using UnityEngine;
@@ -10,7 +10,6 @@ using System.Collections;
 public class MissilePickup : Spaceships2DObject 
 {
 	private int missileCount;	
-	private Camera mainCamera;
 
 	public int MissileCount
 	{
@@ -21,6 +20,8 @@ public class MissilePickup : Spaceships2DObject
 	{
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
 		type = Spaceships2DObjectType.MissilePickup;
+
+		// Randomized missile count
 		missileCount = Random.Range(1, 5);
 	}
 	
@@ -30,17 +31,5 @@ public class MissilePickup : Spaceships2DObject
 		{
 			Controller.RemoveSpaceship2DObject(gameObject, type);
 		}
-	}
-	
-	public override bool OutOfBounds()
-	{
-		Vector2 position = mainCamera.WorldToViewportPoint(transform.position);
-		
-		return (position.x > 1f || position.x < 0f || position.y > 1f || position.y < 0f);
-	}
-	
-	public override void Collision ()
-	{
-		Controller.RemoveSpaceship2DObject(gameObject, type);
 	}
 }
