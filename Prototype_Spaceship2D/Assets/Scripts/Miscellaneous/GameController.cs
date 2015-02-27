@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour
 		if (player.Health > 0)
 		{
 			time += Time.deltaTime;
-			ManageEnemies();
+			//ManageEnemies();
 		}
 		else
 		{

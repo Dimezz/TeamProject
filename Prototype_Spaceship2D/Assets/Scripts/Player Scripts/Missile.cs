@@ -43,21 +43,37 @@ public class Missile : Spaceships2DObject
 
 		switch(direction)
 		{
-		case Direction.Up:
-			rigidbody2D.velocity = new Vector2(0, 10);
-			break;
-		case Direction.Down:
-			rigidbody2D.velocity = new Vector2(0, -10);
-			transform.Rotate(new Vector3(0, 0, 180));
-			break;
-		case Direction.Left:
-			rigidbody2D.velocity = new Vector2(-10, 0);
-			transform.Rotate(new Vector3(0, 0, 90));
-			break;
-		case Direction.Right:
-			rigidbody2D.velocity = new Vector2(10, 0);
-			transform.Rotate(new Vector3(0, 0, -90));
-			break;
+		    case Direction.Up:
+			    rigidbody2D.velocity = new Vector2(0, 10);
+			    break;
+		    case Direction.Down:
+			    rigidbody2D.velocity = new Vector2(0, -10);
+			    transform.Rotate(new Vector3(0, 0, 180));
+			    break;
+		    case Direction.Left:
+			    rigidbody2D.velocity = new Vector2(-10, 0);
+			    transform.Rotate(new Vector3(0, 0, 90));
+			    break;
+		    case Direction.Right:
+			    rigidbody2D.velocity = new Vector2(10, 0);
+			    transform.Rotate(new Vector3(0, 0, -90));
+			    break;
+            case Direction.UpRight:
+                rigidbody2D.velocity = new Vector2(7.5f, 7.5f);
+                transform.Rotate(new Vector3(0, 0, -45));
+                break;
+            case Direction.UpLeft:
+                rigidbody2D.velocity = new Vector2(-7.5f, 7.5f);
+                transform.Rotate(new Vector3(0, 0, 45));
+                break;
+            case Direction.DownRight:
+                rigidbody2D.velocity = new Vector2(7.5f, -7.5f);
+                transform.Rotate(new Vector3(0, 0, -135));
+                break;
+            case Direction.DownLeft:
+                rigidbody2D.velocity = new Vector2(-7.5f, -7.5f);
+                transform.Rotate(new Vector3(0, 0, 135));
+                break;
 		}
 	}
 }

@@ -15,7 +15,7 @@ public struct ObjectDirection
 	public float speed;
 }
 
-public enum Direction { Up = 1, Down, Left, Right};
+public enum Direction { Up = 1, Down, Left, Right, UpRight, UpLeft, DownRight, DownLeft };
 public enum Spaceships2DObjectType { Asteroid = 1, HealthPickup, Missile, MissilePickup };
 
 public abstract class Spaceships2DObject : MonoBehaviour

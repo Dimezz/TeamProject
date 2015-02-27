@@ -37,7 +37,7 @@ public class BasicEnemyController : Spaceships2DObject, IShooter
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		type = Spaceships2DObjectType.Asteroid;
 		
-		weaponFireRate = 1f;
+		weaponFireRate = 2f;
 		weaponFireTimer = 0f;
 		missileList = new List<GameObject>();
 	}
@@ -59,10 +59,13 @@ public class BasicEnemyController : Spaceships2DObject, IShooter
 		if (weaponFireTimer > weaponFireRate)
 		{
 			weaponFireTimer = 0f;
-			
-			GameObject missile = Instantiate(missilePrefab) as GameObject;
-			missile.GetComponent<Missile>().Fire(transform, Direction.Down, this);
-			missileList.Add(missile);
+
+            for (Direction d = Direction.Up; d <= Direction.DownLeft; d++)
+            {
+                GameObject missile = Instantiate(missilePrefab) as GameObject;
+                missile.GetComponent<Missile>().Fire(transform, d, this);
+                missileList.Add(missile);
+            }
 		}
 	}
 

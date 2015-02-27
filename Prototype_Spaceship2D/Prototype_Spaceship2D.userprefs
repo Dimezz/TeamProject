@@ -1,14 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Enemy Scripts\BasicEnemyController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Miscellaneous\Interfaces.cs">
     <Files>
-      <File FileName="Assets\Scripts\Enemy Scripts\BasicEnemyController.cs" Line="54" Column="18" />
-      <File FileName="Assets\Scripts\Miscellaneous\Spaceships2DObject.cs" Line="39" Column="3" />
-      <File FileName="Assets\Scripts\Enemy Scripts\Asteroid.cs" Line="22" Column="25" />
-      <File FileName="Assets\Scripts\Miscellaneous\GameController.cs" Line="75" Column="3" />
-      <File FileName="Assets\Scripts\Player Scripts\PlayerController.cs" Line="26" Column="23" />
-      <File FileName="Assets\Scripts\Miscellaneous\Interfaces.cs" Line="8" Column="2" />
-      <File FileName="Assets\Scripts\Pickup Scripts\MissilePickup.cs" Line="34" Column="3" />
+      <File FileName="Assets\Scripts\Miscellaneous\Interfaces.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy Scripts\BasicEnemyController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Miscellaneous\Spaceships2DObject.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy Scripts\Asteroid.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Miscellaneous\GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player Scripts\PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Pickup Scripts\MissilePickup.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

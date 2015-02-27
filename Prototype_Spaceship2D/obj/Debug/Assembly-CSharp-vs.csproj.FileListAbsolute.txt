@@ -1,0 +1,11 @@
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\Assembly-CSharp.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\UnityEditor.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\UnityEngine.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\UnityEngine.UI.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\Mono.Cecil.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\nunit.framework.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\Unity.DataContract.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\obj\Debug\Assembly-CSharp.dll
+D:\GitHub\TeamProject\Prototype_Spaceship2D\obj\Debug\Assembly-CSharp.pdb
