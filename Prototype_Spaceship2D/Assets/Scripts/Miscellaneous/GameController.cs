@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
 	public GameObject asteroidPrefab;
 	public GameObject healthPrefab;
 	public GameObject missilePickupPrefab;
+    public GameObject basicEnemyPrefab;
 	public int maxEnemies = 1;
 
 	// Will need to access the player control
@@ -23,6 +24,7 @@ public class GameController : MonoBehaviour
 	private float minEnemySpeed;
 	private float maxEnemySpeed;
 	private int currentEnemies;
+    private int maxBossEnemies = 5;
 
 	private Camera mainCamera;
 	private List<GameObject> spaceships2DGameObjects;
@@ -63,7 +65,7 @@ public class GameController : MonoBehaviour
 		if (player.Health > 0)
 		{
 			time += Time.deltaTime;
-			//ManageEnemies();
+			ManageEnemies();
 		}
 		else
 		{
@@ -78,7 +80,7 @@ public class GameController : MonoBehaviour
 	// Removing object from the game
 	public void RemoveSpaceship2DObject(GameObject shapeship2DObject, Spaceships2DObjectType type, int points = 0)
 	{
-		if (type == Spaceships2DObjectType.Asteroid)
+		if (type == Spaceships2DObjectType.Asteroid || type == Spaceships2DObjectType.BasicEnemy)
 		{
 			currentEnemies--;
 		}
@@ -94,35 +96,34 @@ public class GameController : MonoBehaviour
 	{
 		// Only spawn a wave when there are no enemies and are not already in the coroutine
 		if (currentEnemies == 0 && !inCoroutine)
-		{
-			StartCoroutine(SpawnStandardWave());
+        {
+            if (waveNumber % 5 == 0)
+            {
+                StartCoroutine(SpawnBossWave());
+            }
+            else
+            {
+                StartCoroutine(SpawnStandardWave());
+            }
 		}
 	}
 
 	// Controls the instantiation of asteriods and pickups
 	IEnumerator SpawnStandardWave()
 	{
-		inCoroutine = true;
+        inCoroutine = true;
+        UpdateUIMessage();
 
-		UpdateUIMessage();
 
 		yield return new WaitForSeconds(2);
-		for (; currentEnemies < maxEnemies; currentEnemies++)
+		for (int i = 0; i < maxEnemies; i++, currentEnemies++)
 		{
 			if (player.Health <= 0)
 			{
 				break;
 			}
 
-			if (waveNumber % 5 == 0)
-			{
-				SpawnAsteroid(1.5f);
-			}
-			else
-			{
-				SpawnAsteroid();
-			}
-
+            SpawnAsteroid();
 			SpawnHealth();
 			SpawnMissile();
 
@@ -142,15 +143,52 @@ public class GameController : MonoBehaviour
 		waveNumber++;
 		maxEnemies += 5;
 
-		inCoroutine = false;
+        inCoroutine = false;
 	}
+
+    IEnumerator SpawnBossWave()
+    {
+        inCoroutine = true;
+        UpdateUIMessage();
+
+
+        yield return new WaitForSeconds(2);
+        for (int i = 0; i < maxBossEnemies; i++, currentEnemies++)
+        {
+            if (player.Health <= 0)
+            {
+                break;
+            }
+
+            SpawnBasicEnemy();
+            SpawnHealth();
+            SpawnMissile();
+
+            yield return new WaitForSeconds(1.5f);
+        }
+
+        if (minEnemySpeed < 4f)
+        {
+            minEnemySpeed += 0.2f;
+        }
+        if (maxEnemySpeed < 6f)
+        {
+            maxEnemySpeed += 0.2f;
+        }
+
+
+        waveNumber++;
+        maxBossEnemies += 5;
+
+        inCoroutine = false;
+    }
 
 	void UpdateUIMessage()
 	{
 		// Base wave every 5 waves
 		if (waveNumber % 5 == 0)
 		{
-			message = "Boss Wave: " + waveNumber.ToString() + " Enemies: " + maxEnemies.ToString();
+			message = "Boss Wave: " + waveNumber.ToString() + " Enemies: " + maxBossEnemies.ToString();
 		}
 		else
 		{
@@ -173,14 +211,23 @@ public class GameController : MonoBehaviour
 
 	void SpawnAsteroid(float scale = 1)
 	{
-		GameObject enemy = Instantiate(asteroidPrefab) as GameObject;
-		
-		enemy.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
-		enemy.GetComponent<Spaceships2DObject>().Controller = this;
-		enemy.GetComponent<Asteroid>().Damage = (int)(10f * scale);
-		enemy.transform.localScale *= scale;
-		spaceships2DGameObjects.Add(enemy);
+		GameObject asteroid = Instantiate(asteroidPrefab) as GameObject;
+
+        asteroid.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
+        asteroid.GetComponent<Spaceships2DObject>().Controller = this;
+        asteroid.GetComponent<Asteroid>().Damage = (int)(10f * scale);
+        asteroid.transform.localScale *= scale;
+        spaceships2DGameObjects.Add(asteroid);
 	}
+
+    void SpawnBasicEnemy()
+    {
+        GameObject enemy = Instantiate(basicEnemyPrefab) as GameObject;
+
+        enemy.GetComponent<Spaceships2DObject>().Instantiate(RandomSpawnLocation());
+        enemy.GetComponent<Spaceships2DObject>().Controller = this;
+        spaceships2DGameObjects.Add(enemy);
+    }
 
 	void SpawnMissile()
 	{

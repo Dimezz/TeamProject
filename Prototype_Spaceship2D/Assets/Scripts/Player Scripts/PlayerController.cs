@@ -45,6 +45,12 @@ public class PlayerController : MonoBehaviour, IShooter
 		get { return health; }
 	}
 
+    private string shooterType;
+    public string ShooterType
+    {
+        get { return shooterType; }
+    }
+
 	void Start()
 	{
 		// Get the size of the player
@@ -61,6 +67,8 @@ public class PlayerController : MonoBehaviour, IShooter
 		weaponFireRate = 1f;
 		weaponFireTimer = 0f;
 		direction = Direction.Up;
+
+        shooterType = "Player";
 	}
 
 	void FixedUpdate()
@@ -118,6 +126,27 @@ public class PlayerController : MonoBehaviour, IShooter
 			missileCount += collider.GetComponent<MissilePickup>().MissileCount;
 			collider.GetComponent<MissilePickup>().Collision();
 		}
+        else if (collider.tag == "EnemyLaser")
+        {
+            health -= 10;
+
+            if (health < 0)
+            {
+                health = 0;
+            }
+        }
+        else if (collider.tag == "BasicEnemy")
+        {
+            collider.GetComponent<BasicEnemyController>().Collision();
+
+            health -= 10;
+
+            // Don't let the health go negative
+            if (health < 0)
+            {
+                health = 0;
+            }
+        }
 	}
 
 	// Keep the playing inside the view port. WorldToViewportPoint normalizes the coordinates to be between 0.0 and 1.0

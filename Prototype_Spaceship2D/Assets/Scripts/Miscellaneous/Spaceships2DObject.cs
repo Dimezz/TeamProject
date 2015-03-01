@@ -16,7 +16,7 @@ public struct ObjectDirection
 }
 
 public enum Direction { Up = 1, Down, Left, Right, UpRight, UpLeft, DownRight, DownLeft };
-public enum Spaceships2DObjectType { Asteroid = 1, HealthPickup, Missile, MissilePickup };
+public enum Spaceships2DObjectType { Asteroid = 1, HealthPickup, Missile, MissilePickup, BasicEnemy, Player };
 
 public abstract class Spaceships2DObject : MonoBehaviour
 {
@@ -25,6 +25,11 @@ public abstract class Spaceships2DObject : MonoBehaviour
 
 	// Also game objects have a specific type
 	protected Spaceships2DObjectType type;
+
+    public Spaceships2DObjectType Type
+    {
+        get { return type;  }
+    }
 
 	// May be useful the set the game controller. Should be set to null if not used
 	public GameController Controller { get; set; }

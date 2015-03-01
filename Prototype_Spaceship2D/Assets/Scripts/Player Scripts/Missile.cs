@@ -28,11 +28,20 @@ public class Missile : Spaceships2DObject
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (collider.tag == "Asteroid" || collider.tag == "BasicEnemy")
+		if (collider.tag == "Asteroid")
 		{
-			collider.GetComponent<Asteroid>().HitByWeapon();
-			parent.RemoveMissile(gameObject, true);
+            collider.GetComponent<Asteroid>().HitByWeapon();
+            parent.RemoveMissile(gameObject, true);
 		}
+        else if (collider.tag == "BasicEnemy" && parent.ShooterType != "BasicEnemy")
+        {
+            collider.GetComponent<BasicEnemyController>().HitByWeapon();
+            parent.RemoveMissile(gameObject, true);
+        }
+        else if (collider.tag == "Player" && parent.ShooterType != "Player")
+        {
+            parent.RemoveMissile(gameObject, true);
+        }
 	}
 
 	// Missile position based off player location

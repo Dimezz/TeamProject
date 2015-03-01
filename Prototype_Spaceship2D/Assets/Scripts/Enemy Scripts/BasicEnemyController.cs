@@ -17,6 +17,7 @@ public class BasicEnemyController : Spaceships2DObject, IShooter
 
 	// Points variables
 	private int pointsForDestroying;
+    private int pointsForAvoiding;
 
 	// Timers
 	private float weaponFireRate;
@@ -27,31 +28,45 @@ public class BasicEnemyController : Spaceships2DObject, IShooter
 	{
 		get; set;
 	}
+
+    private string shooterType;
+    public string ShooterType
+    {
+        get { return shooterType; }
+    }
 	
 	void Start()
 	{
 		pointsForDestroying = 10;
 		pointsForCollision = 0;
+        pointsForAvoiding = 1;
 
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-		type = Spaceships2DObjectType.Asteroid;
+		type = Spaceships2DObjectType.BasicEnemy;
 		
 		weaponFireRate = 2f;
 		weaponFireTimer = 0f;
 		missileList = new List<GameObject>();
+
+        shooterType = "BasicEnemy";
 	}
 	
-	void FixedUpdate()
+	void Update()
 	{
 		float difference = (transform.position - player.transform.position).magnitude;
 		weaponFireTimer += Time.deltaTime;
 
-		if (difference > 5f)
-		{
-			transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-		}
-		FireMissiles();
+        if (OutOfBounds())
+        {
+            Controller.RemoveSpaceship2DObject(gameObject, type, pointsForAvoiding);
+        }
+
+        //if (difference > 5f)
+        //{
+        //    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        //}
+        FireMissiles();
 	}
 
 	void FireMissiles()

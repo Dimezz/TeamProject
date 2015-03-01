@@ -9,3 +9,4 @@ D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Release\Unity.DataContract.
 D:\GitHub\TeamProject\Prototype_Spaceship2D\Temp\bin\Release\ICSharpCode.NRefactory.dll
 D:\GitHub\TeamProject\Prototype_Spaceship2D\obj\Release\Assembly-CSharp.dll
 D:\GitHub\TeamProject\Prototype_Spaceship2D\obj\Release\Assembly-CSharp.pdb
+D:\GitHub\TeamProject\Prototype_Spaceship2D\obj\Release\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
